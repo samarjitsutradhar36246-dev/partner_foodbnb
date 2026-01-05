@@ -198,38 +198,7 @@ class _EditProfileState extends State<EditProfile> {
                         child: Text('Standard Operating Hours'),
                       ),
                       SizedBox(height: 8),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [Text('Open From'), Text('Until')],
-                      // ),
-                      // SizedBox(height: 8),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [
-                      //     Container(
-                      //       decoration: BoxDecoration(
-                      //         color: Colors.transparent,
-                      //       ),
-                      //       child: Row(
-                      //         children: [
-                      //           Icon(Icons.timelapse_sharp),
-                      //           Text('09:00 AM'),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     Container(
-                      //       decoration: BoxDecoration(
-                      //         color: Colors.transparent,
-                      //       ),
-                      //       child: Row(
-                      //         children: [
-                      //           Icon(Icons.timelapse_sharp),
-                      //           Text('09:00 PM'),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+
                       const AvailabilitySection(),
                     ],
                   ),
@@ -262,7 +231,6 @@ class _AvailabilitySectionState extends State<AvailabilitySection> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

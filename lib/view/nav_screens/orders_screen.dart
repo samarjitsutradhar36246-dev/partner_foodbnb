@@ -63,7 +63,7 @@ class OrderScreen extends StatelessWidget {
     );
   }
 
-  // ---------------- DASHBOARD ----------------
+  
 
   Widget _dashboardCard() {
     return Row(
@@ -111,7 +111,7 @@ class OrderScreen extends StatelessWidget {
     );
   }
 
-  // ---------------- ORDER CARD ----------------
+ 
 
   Widget _orderCard({
     required String orderId,

@@ -2,18 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
-import '../ui_screens/add_dish.dart';
+import 'package:partner_foodbnb/controller/menu_controller.dart';
+import 'package:partner_foodbnb/view/ui_screens/add_dish.dart';
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key});
+class MenuPage extends StatelessWidget {
+  MenuPage({super.key});
 
-  @override
-  State<MenuScreen> createState() => _MenuScreenState();
-}
-
-class _MenuScreenState extends State<MenuScreen> {
   final List<String> categories = [
     "All",
     "Active",
@@ -22,60 +19,9 @@ class _MenuScreenState extends State<MenuScreen> {
     "Mains",
     "Desserts",
   ];
-  int selectedCategoryIndex = 0;
+  final RxInt selectedCategoryIndex = 0.obs;
 
-  // final List<Dish> allDishes = [
-  //   Dish(
-  //     name: "Spicy Chicken Kasha with Egg rice",
-  //     description: " Minced chicken, chili, jasmine rice, fried egg.",
-  //     price: "₹120.50",
-  //     isActive: true,
-  //     category: "Mains",
-  //   ),
-  //   Dish(
-  //     name: "Crispy chicken",
-  //     description: "Oil less Crispy chicken.",
-  //     price: "₹130.00",
-  //     isActive: true,
-  //     category: "Starters",
-  //   ),
-
-  //   Dish(
-  //     name: "Green Salad",
-  //     description: "Paneer, bamboo shoots, green curry paste, Brocoli.",
-  //     price: "₹130.00",
-  //     isActive: true,
-  //     category: "Mains",
-  //   ),
-  //   Dish(
-  //     name: "Alu Parantha and Ghoogni",
-  //     description: "Stuffed with Alu and and mixed veggies.",
-  //     price: "₹50.50",
-  //     isActive: false,
-  //     category: "Mains",
-  //   ),
-  //   Dish(
-  //     name: "Mango Sticky Rice",
-  //     description: "Fresh mango slices, sweet sticky rice, coconut cream.",
-  //     price: "₹80.50",
-  //     isActive: true,
-  //     category: "Desserts",
-  //   ),
-  // ];
-
-  // // Filtering Logic
-  // List<Dish> get filteredDishes {
-  //   String selected = categories[selectedCategoryIndex];
-  //   if (selected == "All") return allDishes;
-  //   if (selected == "Active") {
-  //     return allDishes.where((d) => d.isActive).toList();
-  //   }
-  //   if (selected == "Sold Out") {
-  //     return allDishes.where((d) => !d.isActive).toList();
-  //   }
-  //   return allDishes.where((d) => d.category == selected).toList();
-  // }
-
+  final DishMenuController dmc = Get.put(DishMenuController());
   @override
   Widget build(BuildContext context) {
     const Color backgroundLight = Colors.white;
@@ -121,8 +67,6 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
     );
   }
-
- 
 
   Widget _buildHeader(BuildContext context, Color primary) {
     return Padding(
@@ -195,10 +139,10 @@ class _MenuScreenState extends State<MenuScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          bool isSelected = selectedCategoryIndex == index;
+          bool isSelected = selectedCategoryIndex.value == index;
 
           return GestureDetector(
-            onTap: () => setState(() => selectedCategoryIndex = index),
+            onTap: () => (() => selectedCategoryIndex.value = index),//dmc why not needed here
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 6),
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -237,7 +181,6 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
         child: Row(
           children: [
-           
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Container(
@@ -245,7 +188,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 height: 70,
                 color: Colors.grey.shade200,
                 child: Image.asset(
-                  'assets/images/placeholder.png', 
+                  'assets/images/placeholder.png',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return const Icon(

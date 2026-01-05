@@ -16,6 +16,10 @@ class DishMenuController extends GetxController {
 
   RxInt currentQuantity = 0.obs; // for button
 
+  //for menuscreen searchbar
+  final TextEditingController searchbar = TextEditingController();
+  final RxInt selectedCategoryIndex = 0.obs;
+
   Future<void> saveDish() async {
     if (dishnameController.text.isEmpty ||
         dishPrice.text.isEmpty ||

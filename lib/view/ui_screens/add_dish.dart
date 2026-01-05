@@ -19,7 +19,9 @@ class AddDishScreen extends StatelessWidget {
         title: const Text("Add Dish", style: TextStyle(color: Colors.white)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -31,38 +33,51 @@ class AddDishScreen extends StatelessWidget {
               controller: dmc.dishnameController,
               decoration: InputDecoration(
                 labelText: "Dish Name",
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
                 hintText: 'Enter dish Name',
+                border: OutlineInputBorder(),
               ),
             ),
-
+            SizedBox(height: 30),
             TextField(
               controller: dmc.dishDescription,
               decoration: InputDecoration(
-                labelText: "Dexcription",
+                labelText: "Description",
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
                 hintText: 'Short Description',
+                border: OutlineInputBorder(),
               ),
               maxLines: 3,
             ),
-            TextField(
-              controller: dmc.dishPrice,
-              decoration: InputDecoration(
-                labelText: "Price",
-                hintText: 'Enter Price',
-              ),
-            ),
-
+            SizedBox(height: 30),
             TextField(
               keyboardType: TextInputType.number,
               controller: dmc.dishPrice,
               decoration: InputDecoration(
                 labelText: "Price",
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                ),
                 hintText: 'Enter Price',
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.red,
+                  ), //colour didnt change why?
+                ),
               ),
             ),
+            SizedBox(height: 30),
 
-            Text('Category'),
             DropdownButtonFormField<String>(
-              items: const [
+              decoration: InputDecoration(border: OutlineInputBorder()),
+              items: [
                 DropdownMenuItem(value: "", child: Text("")),
                 DropdownMenuItem(value: "Starters", child: Text("Starters")),
                 DropdownMenuItem(value: "Mains", child: Text("Mains")),
