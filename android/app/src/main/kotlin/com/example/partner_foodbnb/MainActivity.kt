@@ -1,4 +1,4 @@
-package com.example.partner_foodbnb
+package com.foodbnb.partners
 
 import io.flutter.embedding.android.FlutterActivity
 

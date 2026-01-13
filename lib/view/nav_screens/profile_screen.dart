@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
               backgroundColor: Colors.red,
               child: Icon(Icons.person, size: 40, color: Colors.black),
             ),
-                
+
             const SizedBox(height: 12),
 
             Obx(
@@ -88,7 +88,33 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.black),
                 ),
                 onTap: () {
-                  ac.logout();
+                  Get.dialog(
+                    AlertDialog(
+                      title: Text('Logout'),
+                      content: Text('Are you sure you want to logout?'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadiusGeometry.circular(10),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text('Cancel'),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red[400],
+                          ),
+                          onPressed: () {
+                            Get.back();
+                            ac.logout();
+                          },
+                          child: Text('Logout'),
+                        ),
+                      ],
+                    ),
+                  );
                 },
               ),
             ),

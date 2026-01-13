@@ -147,7 +147,7 @@ class Login extends StatelessWidget {
                     //   ),
                     // );
 
-                    Get.to(() => RegisterScreen());
+                    Get.to(() => RegisterScreen(), arguments: '');
                   },
                   child: Text(
                     "Don’t have an account? Register as Partner",

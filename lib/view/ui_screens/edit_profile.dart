@@ -172,7 +172,30 @@ class EditProfile extends StatelessWidget {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          ac.updateProfile();
+                          Get.dialog(
+                            AlertDialog(
+                              title: Text('Update Profile?'),
+                              content: Text('Do you want to save the changes?'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadiusGeometry.circular(10),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: Text("Cancel"),
+                                ),
+                                ElevatedButton(
+                                  onPressed: ()async {
+                                    Get.back();
+                                   await ac.updateProfile();//calls controller update db
+                                  },
+                                  child: Text('Save Changes'),
+                                ),
+                              ],
+                            ),
+                          );
                         },
                         child: Text('Edit Profile'),
                       ),

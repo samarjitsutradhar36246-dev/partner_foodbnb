@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:partner_foodbnb/view/auth_screens/login.dart';
+import 'package:partner_foodbnb/view/auth_screens/register.dart';
 import 'package:partner_foodbnb/view/ui_screens/home_screen.dart';
 
 class AuthController extends GetxController {
@@ -105,55 +106,85 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> registerUser() async {
+  Future<void> registerUser(String googleUid) async {
     if (regPasswordController.text != regConfirmPasswordController.text) {
       Get.snackbar('Error', 'Passwords do not match!');
       return;
     }
     isLoading.value = true;
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: regEmailController.text.trim(),
-        password: regPasswordController.text.trim(),
-      );
-      final FirebaseFirestore customDB = FirebaseFirestore.instance;
-      //to store data data in
-      await customDB
-          .collection('moms_kitchens')
-          .doc(FirebaseAuth.instance.currentUser?.uid)
-          .set({
-            "uid": FirebaseAuth.instance.currentUser?.uid,
-            "createdAt":
-                DateTime.now(), //or we can also give time by using Timestamp.now()
-            "cuisine": "",
-            "deliveryTime": "",
-            "description": regRestaurantDesController.text.trim(),
-            "featuredDishImage": "",
-            "isVeg": "",
-            "location": "",
-            "priceForOne": '',
-            "profileImage": '',
-            'rating': 5,
-            'specialties': '',
-            'totalOrders': 0,
-            "wallet_balance": 0,
-            "lifetime_earnings": 0,
-            "push_token": "",
-            "phone": regPhoneController.text,
-            "email": regEmailController.text.trim(),
-            "locationName": regRestaurantAddress.text.trim(),
-            "name": restaurantNamecontroller.text.trim(),
-            "ownerName": nameController.text.trim(),
-          }); //if we want to auto set or want for specified/fixed/particular document use.set()and set the doc using .doc for adding the Id.
-      // .add if we want to create/add on our own, without the need to specify a custom doc Id. ,generates auto id
-      //for using the id we used the currentuser part.
+      if (googleUid == '') {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: regEmailController.text.trim(),
+          password: regPasswordController.text.trim(),
+        );
+        final FirebaseFirestore customDB = FirebaseFirestore.instance;
+        //to store data data in
+        await customDB
+            .collection('moms_kitchens')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .set({
+              "uid": FirebaseAuth.instance.currentUser?.uid,
+              "createdAt":
+                  DateTime.now(), //or we can also give time by using Timestamp.now()
+              "cuisine": "",
+              "deliveryTime": "",
+              "description": regRestaurantDesController.text.trim(),
+              "featuredDishImage": "",
+              "isVeg": "",
+              "location": "",
+              "priceForOne": '',
+              "profileImage": '',
+              'rating': 5,
+              'specialties': '',
+              'totalOrders': 0,
+              "wallet_balance": 0,
+              "lifetime_earnings": 0,
+              "push_token": "",
+              "phone": regPhoneController.text,
+              "email": regEmailController.text.trim(),
+              "locationName": regRestaurantAddress.text.trim(),
+              "name": restaurantNamecontroller.text.trim(),
+              "ownerName": nameController.text.trim(),
+            }); //if we want to auto set or want for specified/fixed/particular document use.set()and set the doc using .doc for adding the Id.
+        // .add if we want to create/add on our own, without the need to specify a custom doc Id. ,generates auto id
+        //for using the id we used the currentuser part.
+      } else {
+        final FirebaseFirestore customDB = FirebaseFirestore.instance;
+        //to store data data in
+        await customDB
+            .collection('moms_kitchens')
+            .doc(FirebaseAuth.instance.currentUser?.uid)
+            .set({
+              "uid": FirebaseAuth.instance.currentUser?.uid,
+              "createdAt":
+                  DateTime.now(), //or we can also give time by using Timestamp.now()
+              "cuisine": "",
+              "deliveryTime": "",
+              "description": regRestaurantDesController.text.trim(),
+              "featuredDishImage": "",
+              "isVeg": "",
+              "location": "",
+              "priceForOne": '',
+              "profileImage": '',
+              'rating': 5,
+              'specialties': '',
+              'totalOrders': 0,
+              "wallet_balance": 0,
+              "lifetime_earnings": 0,
+              "push_token": "",
+              "phone": regPhoneController.text,
+              "email": regEmailController.text.trim(),
+              "locationName": regRestaurantAddress.text.trim(),
+              "name": restaurantNamecontroller.text.trim(),
+              "ownerName": nameController.text.trim(),
+            }); //if we want to auto set or want for specified/fixed/particular document use.set()and set the doc using .doc for adding the Id.
+        // .add if we want to create/add on our own, without the need to specify a custom doc Id. ,generates auto id
+        //for using the id we used the currentuser part.
+      }
 
-      final users = customDB
-          .collection('moms_kitchens')
-          .doc(FirebaseAuth.instance.currentUser?.uid)
-          .get();
-      print(users);
       Get.snackbar('Success', 'Account Registered Successfully');
+      getUserData();
       Get.to(() => HomeScreen());
     } on FirebaseAuthException catch (e) {
       String message = "An error occurred";
@@ -167,7 +198,6 @@ class AuthController extends GetxController {
   }
 
   Future<void> signinWithGoogle() async {
-    log("hi");
     try {
       isLoading.value = true;
 
@@ -194,26 +224,12 @@ class AuthController extends GetxController {
       final doc = await firebase.collection('moms_kitchens').doc(uid).get();
 
       if (!doc.exists) {
-        await firebase.collection('moms_kitchens').doc(uid).set({
-          "uid": uid,
-          "createdAt": DateTime.now(),
-          "email": user.email,
-          "ownerName": user.displayName ?? "",
-          "name": "",
-          "phone": user.phoneNumber ?? "",
-          "profileImage": user.photoURL ?? "",
-          "wallet_balance": 0,
-          "lifetime_earnings": 0,
-          "rating": 5,
-          "totalOrders": 0,
-          "isVeg": "",
-          "locationName": "",
-          "description": "",
-          "push_token": "",
-        });
-      }
+        nameController.text = user.displayName ?? '';
+        regEmailController.text = user.email ?? '';
+        regPhoneController.text = user.phoneNumber ?? '';
 
-      Get.offAll(() => HomeScreen());
+        Get.to(() => RegisterScreen(), arguments: uid);
+      }
     } catch (e) {
       log("Google sign in error: $e");
       Get.snackbar("Error", "Google sign in failed");
@@ -222,9 +238,10 @@ class AuthController extends GetxController {
     }
   }
 
-  void logout() {
+  void logout() async {
     try {
-      auth.signOut();
+      await auth.signOut();
+      await GoogleSignIn().signOut();
       Get.to(() => Login());
     } catch (e) {
       log(e.toString());

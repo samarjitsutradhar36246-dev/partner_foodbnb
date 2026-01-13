@@ -53,11 +53,11 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBw5-7dkBqbmSbceEdOcudQdfIHLl8-Ssg',
-    appId: '1:918264432794:android:91c91130c3beab98207723',
-    messagingSenderId: '918264432794',
-    projectId: 'foodbnb-partner-app',
-    storageBucket: 'foodbnb-partner-app.firebasestorage.app',
+    apiKey: 'AIzaSyDKqGgNka-KRUfK-fPFKz4IxnkvGSVndZA',
+    appId: '1:553828899686:android:55b1ddcb2c5e940d5686a7',
+    messagingSenderId: '553828899686',
+    projectId: 'foodbnb-b6993',
+    storageBucket: 'foodbnb-b6993.firebasestorage.app',
   );
 
 }

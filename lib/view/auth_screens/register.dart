@@ -8,6 +8,8 @@ class RegisterScreen extends StatelessWidget {
 
   final AuthController ac = Get.put(AuthController());
 
+  final String goodleUid = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
     final Color primaryRed = Colors.red.shade400;
@@ -137,9 +139,9 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                   // to access value use .value
-                  onPressed: ac.isLoading.value
-                      ? null
-                      : ac.registerUser, //wont access the value so didnot use .value
+                  onPressed: () => ac.registerUser(
+                    goodleUid,
+                  ), //wont access the value so didnot use .value
                   child: ac.isLoading.value
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text(
@@ -165,34 +167,6 @@ class RegisterScreen extends StatelessWidget {
                       color: primaryRed,
                       fontWeight: FontWeight.w500,
                     ),
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Divider(thickness: 2, color: Colors.blueGrey),
-                  Text('Or', style: TextStyle(fontWeight: FontWeight.bold)),
-                  Divider(),
-                ],
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  ac.signinWithGoogle();
-                },
-                child: Center(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-
-                    children: [
-                      Image.asset(
-                        'assets/images/google_2.jpg',
-                        height: 50,
-                        width: 50,
-                      ),
-                      Text('Sign up with Google'),
-                    ],
                   ),
                 ),
               ),

@@ -1,78 +1,41 @@
 {
   "project_info": {
-    "project_number": "918264432794",
-    "project_id": "foodbnb-partner-app",
-    "storage_bucket": "foodbnb-partner-app.firebasestorage.app"
+    "project_number": "553828899686",
+    "project_id": "foodbnb-b6993",
+    "storage_bucket": "foodbnb-b6993.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:918264432794:android:b4c6ffc00524ecc4207723",
+        "mobilesdk_app_id": "1:553828899686:android:55b1ddcb2c5e940d5686a7",
         "android_client_info": {
-          "package_name": "com.example.foodbnb_partnerapp"
+          "package_name": "com.foodbnb.partners"
         }
       },
       "oauth_client": [
         {
-          "client_id": "918264432794-g1nc0998vm62bkil4hq77tne4i8is7ol.apps.googleusercontent.com",
+          "client_id": "553828899686-d89ooa4vk384dvrhhuoqhs26am6dr1ep.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.foodbnb_partnerapp",
+            "package_name": "com.foodbnb.partners",
             "certificate_hash": "2f44db1178ec69396b8ce30b5f8348fe8a6dbae5"
           }
         },
         {
-          "client_id": "918264432794-c0nhi2ie5h1ug7pnt508u9neutp56lsc.apps.googleusercontent.com",
+          "client_id": "553828899686-ecanq2irjca0vnk70brg49npcsjjfvn4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBw5-7dkBqbmSbceEdOcudQdfIHLl8-Ssg"
+          "current_key": "AIzaSyDKqGgNka-KRUfK-fPFKz4IxnkvGSVndZA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "918264432794-c0nhi2ie5h1ug7pnt508u9neutp56lsc.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:918264432794:android:91c91130c3beab98207723",
-        "android_client_info": {
-          "package_name": "com.example.partner_foodbnb"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "918264432794-j04447orvbju5cv4426kdtf54sufbj9g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.partner_foodbnb",
-            "certificate_hash": "2f44db1178ec69396b8ce30b5f8348fe8a6dbae5"
-          }
-        },
-        {
-          "client_id": "918264432794-c0nhi2ie5h1ug7pnt508u9neutp56lsc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBw5-7dkBqbmSbceEdOcudQdfIHLl8-Ssg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "918264432794-c0nhi2ie5h1ug7pnt508u9neutp56lsc.apps.googleusercontent.com",
+              "client_id": "553828899686-ecanq2irjca0vnk70brg49npcsjjfvn4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

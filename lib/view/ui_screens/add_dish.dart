@@ -96,8 +96,8 @@ class AddDishScreen extends StatelessWidget {
                 // for minus
                 GestureDetector(
                   onTap: () {
-                    if (dmc.currentQuantity > 0) {
-                      dmc.currentQuantity--;
+                    if (dmc.currentQuantity.value > 0) {
+                      dmc.currentQuantity.value--;
                     }
                   },
                   child: Container(
@@ -114,7 +114,7 @@ class AddDishScreen extends StatelessWidget {
                   color: Colors.grey[200],
                   alignment: Alignment.center,
                   child: Text(
-                    "${dmc.currentQuantity} ",
+                    "${dmc.currentQuantity.value} ",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -122,7 +122,7 @@ class AddDishScreen extends StatelessWidget {
                 // add
                 GestureDetector(
                   onTap: () {
-                    dmc.currentQuantity++;
+                    dmc.currentQuantity.value++;
                   },
                   child: Container(
                     width: 45,
