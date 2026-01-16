@@ -64,11 +64,6 @@ class Login extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => ForgetPassword()),
-                    // );
-
                     Get.to(() => ForgetPassword());
                   },
                   child: Text(
@@ -140,13 +135,6 @@ class Login extends StatelessWidget {
               Center(
                 child: TextButton(
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const RegisterScreen(),
-                    //   ),
-                    // );
-
                     Get.to(() => RegisterScreen(), arguments: '');
                   },
                   child: Text(

@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:partner_foodbnb/controller/order_controller.dart';
 
 class OrderScreen extends StatelessWidget {
@@ -16,8 +15,6 @@ class OrderScreen extends StatelessWidget {
     final Color primaryRed = Colors.red.shade400;
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-
       appBar: AppBar(
         backgroundColor: primaryRed,
         elevation: 0,
@@ -26,13 +23,32 @@ class OrderScreen extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 12),
-            child: Chip(
-              label: Text('Online', style: TextStyle(color: Colors.white)),
-              backgroundColor: Colors.green,
-            ),
+            padding: const EdgeInsets.only(right: 12),
+            child: Obx(() {
+              return Row(
+                children: [
+                  Text(
+                    oc.isActive.value ? "Online" : "Offline",
+                    style: TextStyle(
+                      color: oc.isActive.value ? Colors.green : Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Switch(
+                    value: oc.isActive.value,
+                    onChanged: (value) {
+                      oc.toggleWithConfirmation(value);
+                    },
+                    activeThumbColor: Colors.white,
+                    activeTrackColor: Colors.green,
+                    inactiveThumbColor: Colors.white,
+                    inactiveTrackColor: Colors.grey.shade500,
+                  ),
+                ],
+              );
+            }),
           ),
         ],
       ),

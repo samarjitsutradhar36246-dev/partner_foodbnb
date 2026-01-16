@@ -50,6 +50,7 @@ class AuthController extends GetxController {
   final FirebaseFirestore firebase = FirebaseFirestore.instance;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final RxBool isActive = false.obs;
 
   final RxMap userData = {}.obs;
 
@@ -67,6 +68,7 @@ class AuthController extends GetxController {
       aboutCooking.text = userData['description'] ?? '';
       phoneNumberController.text = userData['phone'] ?? '';
       kitchenAddressController.text = userData['locationName'] ?? '';
+      isActive.value = userData['isActive'] ?? false;
       log("Got user data: $userData");
     } catch (e) {
       log(e.toString());
@@ -185,7 +187,9 @@ class AuthController extends GetxController {
 
       Get.snackbar('Success', 'Account Registered Successfully');
       getUserData();
-      Get.to(() => HomeScreen());
+      Get.off(
+        () => HomeScreen(),
+      ); //off just like replacement no scope to go back
     } on FirebaseAuthException catch (e) {
       String message = "An error occurred";
       if (e.code == 'weak-password') message = "The password is too weak.";

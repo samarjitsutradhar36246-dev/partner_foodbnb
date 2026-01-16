@@ -30,7 +30,7 @@ class MenuScreen extends StatelessWidget {
     const Color textSecondary = Colors.grey;
 
     return Scaffold(
-      backgroundColor: backgroundLight,
+   
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

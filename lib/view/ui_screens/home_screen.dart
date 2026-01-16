@@ -17,37 +17,36 @@ class HomeScreen extends StatelessWidget {
   ];
 
   final HomeController hc = Get.put(HomeController());
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      body: Obx(() => pages[hc.selectedIndex.value]),//obx used since we have taken the value from rx variable
+      body: Obx(() => pages[hc.selectedIndex.value]),
 
       bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: hc.selectedIndex.value,
-          onTap: (index) {
+        () => NavigationBar(
+          selectedIndex: hc.selectedIndex.value,
+          onDestinationSelected: (index) {
             hc.selectedIndex.value = index;
           },
-          backgroundColor: const Color(0xFF16251C),
-          selectedItemColor: Colors.red[400],
-          unselectedItemColor: Colors.black,
-          items: const [
-            BottomNavigationBarItem(
+          backgroundColor: Colors.white,
+          indicatorColor: Colors.red.shade400,
+          destinations: const [
+            NavigationDestination(
               icon: Icon(Icons.receipt_long),
-              label: "Orders",
+              label: 'Orders',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(Icons.menu_book_sharp),
-              label: "Menu",
+              label: 'Menu',
             ),
-            BottomNavigationBarItem(
+            NavigationDestination(
               icon: Icon(Icons.account_balance_wallet),
-              label: "Earnings",
+              label: 'Earnings',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+            NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
           ],
         ),
       ),
