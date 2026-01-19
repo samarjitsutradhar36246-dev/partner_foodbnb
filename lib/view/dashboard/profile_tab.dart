@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:partner_foodbnb/controller/auth_controller.dart';
 import 'package:partner_foodbnb/view/screens/customerhelp_screen.dart';
 import 'package:partner_foodbnb/view/screens/edit_profile.dart';
-import 'package:partner_foodbnb/view/screens/setting_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
@@ -81,21 +80,7 @@ class ProfileScreen extends StatelessWidget {
                     Get.to(() => EditProfile());
                   },
                 ),
-                //settings
-                settingTile(
-                  Icons.settings,
-                  Colors.grey,
-                  'Settings',
-                  'Control and Customization',
-                  Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                  () {
-                    Get.to(() => SettingsScreen());
-                  },
-                ),
+
                 //language
                 settingTile(
                   Icons.language,
@@ -145,26 +130,6 @@ class ProfileScreen extends StatelessWidget {
                   },
                 ),
 
-                sectionTitle('NOTIFICATIONS'),
-                //sound
-                settingTile(
-                  Icons.volume_up_rounded,
-                  Colors.orangeAccent,
-                  'Sound',
-                  'Notification sounds',
-                  Switch(
-                    value: isNotification.value,
-                    onChanged: (bool value) {
-                      isNotification.value = value;
-                      Get.snackbar(
-                        'Coming Soon',
-                        'Push Notification coming soon',
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                    },
-                  ),
-                  () {},
-                ),
                 //notification
                 settingTile(
                   Icons.notifications_active,
@@ -184,25 +149,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   () {},
                 ),
-                //vibration
-                settingTile(
-                  Icons.vibration,
-                  Colors.blue,
-                  'Vibration',
-                  'Haptic Feedback',
-                  Switch(
-                    value: isVibration.value,
-                    onChanged: (bool value) {
-                      isVibration.value = value;
-                      Get.snackbar(
-                        'Coming Soon',
-                        'Vibration feature coming soon',
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
-                    },
-                  ),
-                  () {},
-                ),
+
                 //darkmod
                 settingTile(
                   Icons.dark_mode_rounded,
@@ -236,45 +183,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-            sectionTitle('DATA & STORAGE'),
-            //data saver
-            settingTile(
-              Icons.vibration,
-              Colors.blue,
-              'Data Saver Mode',
-              'Reduce data usage',
-              Switch(
-                value: isVibration.value,
-                onChanged: (bool value) {
-                  isVibration.value = value;
-                  Get.snackbar(
-                    'Coming Soon',
-                    'Vibration feature coming soon',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
-              () {},
-            ),
-            //cache
-            settingTile(
-              Icons.vibration,
-              Colors.blue,
-              'Clear Cache',
-              'Free up storage space',
-              Switch(
-                value: isVibration.value,
-                onChanged: (bool value) {
-                  isVibration.value = value;
-                  Get.snackbar(
-                    'Coming Soon',
-                    'Vibration feature coming soon',
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-                },
-              ),
-              () {},
-            ),
 
             SizedBox(
               width: double.infinity,
@@ -297,7 +205,10 @@ class ProfileScreen extends StatelessWidget {
                           onPressed: () {
                             Get.back();
                           },
-                          child: Text('Cancel'),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -307,7 +218,10 @@ class ProfileScreen extends StatelessWidget {
                             Get.back();
                             ac.logout();
                           },
-                          child: Text('Logout'),
+                          child: Text(
+                            'Logout',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ],
                     ),

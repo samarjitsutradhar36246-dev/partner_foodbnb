@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
@@ -10,8 +9,6 @@ class OrderScreen extends StatelessWidget {
   OrderScreen({super.key});
 
   final OrderController oc = Get.put(OrderController()); //for orders
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,41 +52,40 @@ class OrderScreen extends StatelessWidget {
         ],
       ),
 
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _dashboardCard(),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Recents Orders',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            _dashboardCard(),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Recents Orders',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            FirestoreListView(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              query: FirebaseFirestore.instance
+                  .collection('orders')
+                  .where(
+                    'restaurant_id',
+                    isEqualTo: FirebaseAuth.instance.currentUser?.uid,
                   ),
-                ],
-              ),
-              SizedBox(height: 8),
-              FirestoreListView(
-                shrinkWrap: true,
-                query: FirebaseFirestore.instance
-                    .collection('orders')
-                    .where(
-                      'restaurant_id',
-                      isEqualTo: FirebaseAuth.instance.currentUser?.uid,
-                    ),
-                emptyBuilder: (context) =>
-                    Text('No Orders Available'), //when no items to show
-                itemBuilder: (context, doc) {
-                  final order = doc.data();
-                  order['docId'] = doc.id;
-                  return _orderCard(orderData: order);
-                },
-              ),
-            ],
-          ),
+              emptyBuilder: (context) =>
+                  Text('No Orders Available'), //when no items to show
+              itemBuilder: (context, doc) {
+                final order = doc.data();
+                order['docId'] = doc.id;
+                return _orderCard(orderData: order);
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -165,7 +161,7 @@ class OrderScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Order ${orderData['order_id']}",
+                "Order ID: ${orderData['order_id']}",
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -195,13 +191,64 @@ class OrderScreen extends StatelessWidget {
           const Divider(height: 20),
 
           ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: (orderData['items'] ?? []).length,
             itemBuilder: (context, index) {
               var item = orderData['items'][index];
               return Padding(
-                padding: EdgeInsetsGeometry.only(bottom: 4),
-                child: Text(item.toString()),
+                padding: EdgeInsets.only(bottom: 12),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.restaurant_menu,
+                        color: Colors.red.shade400,
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item['name'] ?? 'Item',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Qty: ${item['quantity'] ?? 1}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        '₹${item['price'] ?? '0'}',
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ),

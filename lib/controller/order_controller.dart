@@ -10,7 +10,6 @@ class OrderController extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
   RxBool isActive = false.obs;
 
-
 //for updating toggle
   Future<void> updateIsActive(bool value) async {
     try {
@@ -41,7 +40,7 @@ class OrderController extends GetxController {
 
       await _firestore.collection('orders').doc(docId).update({
         "orderStatus": "accepted",
-        "updatedAt": FieldValue.serverTimestamp(),
+        "updatedAt": FieldValue.serverTimestamp(), //use datetime.now
       });
     } catch (e) {
       log("Accept order error: $e");
@@ -85,6 +84,42 @@ void toggleWithConfirmation(bool value) {
       updateIsActive(true);
     }
   }
+
+
+
+  //for updating order status
+  Future<void> updateOrderStatus({
+   required String docId,
+   required String status,
+}) async {
+  try {
+    await _firestore.collection('orders').doc(docId).update({
+      "orderStatus": status,
+      "updatedAt": FieldValue.serverTimestamp(),
+    });
+  } catch (e) {
+    log("Update order status error: $e");
+  }
+}
+
+
+
+//to confirm reject order
+void confirmReject(String docId) {
+  Get.defaultDialog(
+    title: "Reject Order?",
+    middleText: "Are you sure you want to reject this order?",
+    textConfirm: "Yes, Reject",
+    textCancel: "Cancel",
+    confirmTextColor: Colors.white,
+    buttonColor: Colors.red,
+    onConfirm: () {
+      updateOrderStatus(docId: docId, status: "rejected");
+      Get.back();
+    },
+  );
+}
+
   
   
 }

@@ -10,7 +10,12 @@ class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Profile'), centerTitle: true),
+      appBar: AppBar(
+        title: Text('My Profile'),
+        centerTitle: true,
+        backgroundColor: Colors.red[400],
+        foregroundColor: Colors.white,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -171,6 +176,10 @@ class EditProfile extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red[400],
+                          foregroundColor: Colors.white,
+                        ),
                         onPressed: () {
                           Get.dialog(
                             AlertDialog(
@@ -187,9 +196,10 @@ class EditProfile extends StatelessWidget {
                                   child: Text("Cancel"),
                                 ),
                                 ElevatedButton(
-                                  onPressed: ()async {
+                                  onPressed: () async {
                                     Get.back();
-                                   await ac.updateProfile();//calls controller update db
+                                    await ac
+                                        .updateProfile(); //calls controller update db
                                   },
                                   child: Text('Save Changes'),
                                 ),

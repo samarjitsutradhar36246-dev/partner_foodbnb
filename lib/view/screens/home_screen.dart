@@ -40,12 +40,12 @@ class HomeScreen extends StatelessWidget {
               label: 'Orders',
             ),
             NavigationDestination(
-              icon: Icon(Icons.menu_book_sharp),
+              icon: Icon(Icons.menu_book_outlined),
               selectedIcon: Icon(Icons.menu_book_sharp, color: Colors.red[400]),
               label: 'Menu',
             ),
             NavigationDestination(
-              icon: Icon(Icons.account_balance_wallet),
+              icon: Icon(Icons.account_balance_wallet_outlined),
               selectedIcon: Icon(
                 Icons.account_balance_wallet,
                 color: Colors.red[400],
@@ -53,7 +53,7 @@ class HomeScreen extends StatelessWidget {
               label: 'Earnings',
             ),
             NavigationDestination(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person_outlined),
               selectedIcon: Icon(Icons.person, color: Colors.red[400]),
               label: 'Profile',
             ),

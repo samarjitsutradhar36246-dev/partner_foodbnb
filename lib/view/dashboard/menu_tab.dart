@@ -30,13 +30,51 @@ class MenuScreen extends StatelessWidget {
     const Color textSecondary = Colors.grey;
 
     return Scaffold(
-   
+      appBar: AppBar(
+        backgroundColor: Colors.red[400],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => AddDishScreen());
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.add, color: Colors.white, size: 20),
+                  const SizedBox(width: 4),
+                  TextButton(
+                    onPressed: () {
+                      Get.to(() => AddDishScreen());
+                    },
+                    child: Text(
+                      'ADD DISH',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              _buildHeader(context, primaryRed),
               _buildSearchBar(surfaceLight, textSecondary),
               _buildCategoryFilters(primaryRed, surfaceLight),
 
@@ -67,49 +105,6 @@ class MenuScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context, Color primary) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "Menu",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Get.to(() => AddDishScreen());
-            },
-            child: Row(
-              children: [
-                Icon(Icons.add, color: primary, size: 20),
-                const SizedBox(width: 4),
-                TextButton(
-                  onPressed: () {
-                    Get.to(() => AddDishScreen());
-                  },
-                  child: Text(
-                    'ADD DISH',
-                    style: TextStyle(
-                      color: primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

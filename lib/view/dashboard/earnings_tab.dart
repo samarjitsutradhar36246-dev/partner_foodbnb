@@ -55,15 +55,15 @@ class EarningsScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey[200]!),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 2),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
+            color: Colors.grey.withAlpha(25),
+            blurRadius: 5,
+            spreadRadius: 5,
+            offset: Offset(0, 2),
           ),
         ],
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         children: [
@@ -124,14 +124,8 @@ class EarningsScreen extends StatelessWidget {
           ),
           // Bottom Footer of Card using SpaceBetween
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            decoration: BoxDecoration(
-              color: Colors.grey[50],
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(16),
-              ),
-              border: Border(top: BorderSide(color: Colors.grey[100]!)),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -166,6 +160,7 @@ class EarningsScreen extends StatelessWidget {
       ),
     );
   }
+  
 
   // Stats Grid
   Widget _buildStatsGrid() {
