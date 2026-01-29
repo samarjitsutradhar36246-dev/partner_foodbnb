@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:partner_foodbnb/controller/auth_controller.dart';
 
 class EarningsScreen extends StatelessWidget {
-  const EarningsScreen({super.key});
+  EarningsScreen({super.key});
 
   // Theme Colors
   final Color primaryRed = const Color(0xFFEF5350); // Colors.red[400]
   final Color textMain = const Color(0xFF112117);
 
+  final AuthController ac = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,12 +84,14 @@ class EarningsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                Text(
-                  '₹1,250.50',
-                  style: TextStyle(
-                    color: textMain,
-                    fontSize: 38,
-                    fontWeight: FontWeight.bold,
+                Obx(
+                  () => Text(
+                    ac.userData.value['walletBalance'].toString(),
+                    style: TextStyle(
+                      color: textMain,
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -165,9 +170,18 @@ class EarningsScreen extends StatelessWidget {
   Widget _buildStatsGrid() {
     return Row(
       children: [
-        _buildStatBox('THIS WEEK', '₹ 320.00', Icons.trending_up),
+        _buildStatBox(
+          'THIS WEEK',
+          ac.userData.value['weeklyEarning'].toString(),
+          Icons.trending_up,
+        ),
+
         const SizedBox(width: 12),
-        _buildStatBox('ORDERS', '12', Icons.shopping_bag),
+        _buildStatBox(
+          'ORDERS',
+          ac.userData.value['totalOrders'].toString(),
+          Icons.shopping_bag,
+        ),
       ],
     );
   }

@@ -15,6 +15,7 @@ class AuthController extends GetxController {
   final passwordController = TextEditingController();
 
   // for register page
+
   final nameController = TextEditingController();
   final restaurantNamecontroller = TextEditingController();
   final regEmailController = TextEditingController();
@@ -143,9 +144,11 @@ class AuthController extends GetxController {
               'rating': 5,
               'specialties': '',
               'totalOrders': 0,
-              "wallet_balance": 0,
-              "lifetime_earnings": 0,
-              "push_token": "",
+              "walletBalance": 0,
+              "lifetimeEarnings": 0,
+              'weeklyEarning': 0,
+
+              "pushToken": "",
               'orderStatus': '',
               "phone": regPhoneController.text,
               "email": regEmailController.text.trim(),
@@ -249,6 +252,7 @@ class AuthController extends GetxController {
       isLoading.value = false;
     }
   }
+  //
 
   void logout() async {
     try {

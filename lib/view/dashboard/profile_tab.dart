@@ -8,7 +8,6 @@ import 'package:partner_foodbnb/view/screens/edit_profile.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
@@ -20,21 +19,18 @@ class ProfileScreen extends StatelessWidget {
   RxBool isNotification = false.obs;
 
   final Rx<File?> localProfileImage = Rx<File?>(null);
-final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker = ImagePicker();
 
+  Future<void> pickImage(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(
+      source: source,
+      imageQuality: 70,
+    );
 
-Future<void> pickImage(ImageSource source) async {
-  final XFile? pickedFile = await _picker.pickImage(
-    source: source,
-    imageQuality: 70,
-  );
-
-  if (pickedFile != null) {
-    localProfileImage.value = File(pickedFile.path);
+    if (pickedFile != null) {
+      localProfileImage.value = File(pickedFile.path);
+    }
   }
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,42 +41,38 @@ Future<void> pickImage(ImageSource source) async {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 50),
-          Center(
-  child: Obx(
-    () {
-      final imageUrl = ac.userData['profileImage'];
-      log("Profile image: ${ac.userData['profileImage']}");
+            Center(
+              child: Obx(() {
+                final imageUrl = ac.userData['profileImage'];
+                log("Profile image: ${ac.userData['profileImage']}");
 
-
-      return Stack(
-        children: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Colors.lightBlue[200],
-            backgroundImage:
-                (imageUrl != null && imageUrl.toString().isNotEmpty)
-                    ? NetworkImage(imageUrl)
-                    : null,
-            child: (imageUrl == null || imageUrl.toString().isEmpty)
-                ? Icon(Icons.person, size: 40, color: Colors.black)
-                : null,
-          ),
-          Positioned(
-            bottom: -10,
-            right: -11,
-            child: IconButton(
-              icon: Icon(Icons.camera_alt_sharp),
-              onPressed: () {
-                // future image picker goes here
-              },
+                return Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.lightBlue[200],
+                      backgroundImage:
+                          (imageUrl != null && imageUrl.toString().isNotEmpty)
+                          ? NetworkImage(imageUrl)
+                          : null,
+                      child: (imageUrl == null || imageUrl.toString().isEmpty)
+                          ? Icon(Icons.person, size: 40, color: Colors.black)
+                          : null,
+                    ),
+                    Positioned(
+                      bottom: -10,
+                      right: -11,
+                      child: IconButton(
+                        icon: Icon(Icons.camera_alt_sharp),
+                        onPressed: () {
+                          // future image picker goes here
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }),
             ),
-          ),
-        ],
-      );
-    },
-  ),
-),
-
 
             Obx(
               () => Center(
@@ -222,50 +214,59 @@ Future<void> pickImage(ImageSource source) async {
                 ),
               ],
             ),
-
-            SizedBox(
-              width: double.infinity,
-              child: ListTile(
-                leading: const Icon(Icons.logout, color: Colors.redAccent),
-                title: const Text(
-                  "Logout",
-                  style: TextStyle(color: Colors.black),
-                ),
-                onTap: () {
-                  Get.dialog(
-                    AlertDialog(
-                      title: Text('Logout'),
-                      content: Text('Are you sure you want to logout?'),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(10),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: ListTile(
+                  leading: const Icon(Icons.logout, color: Colors.white),
+                  title: const Text(
+                    "Logout",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: () {
+                    Get.dialog(
+                      AlertDialog(
+                        title: Text('Logout'),
+                        content: Text('Are you sure you want to logout?'),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(10),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text(
+                              'Cancel',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red[400],
+                            ),
+                            onPressed: () {
+                              Get.back();
+                              ac.logout();
+                            },
+                            child: Text(
+                              'Logout',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red[400],
-                          ),
-                          onPressed: () {
-                            Get.back();
-                            ac.logout();
-                          },
-                          child: Text(
-                            'Logout',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ],
@@ -348,35 +349,34 @@ Future<void> pickImage(ImageSource source) async {
   }
 
   void _showImagePickerSheet(BuildContext context) {
-  Get.bottomSheet(
-    Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    Get.bottomSheet(
+      Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text("Camera"),
+              onTap: () {
+                Get.back();
+                pickImage(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.photo_library),
+              title: Text("Gallery"),
+              onTap: () {
+                Get.back();
+                pickImage(ImageSource.gallery);
+              },
+            ),
+          ],
+        ),
       ),
-      child: Wrap(
-        children: [
-          ListTile(
-            leading: Icon(Icons.camera_alt),
-            title: Text("Camera"),
-            onTap: () {
-              Get.back();
-              pickImage(ImageSource.camera);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.photo_library),
-            title: Text("Gallery"),
-            onTap: () {
-              Get.back();
-              pickImage(ImageSource.gallery);
-            },
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
+    );
+  }
 }

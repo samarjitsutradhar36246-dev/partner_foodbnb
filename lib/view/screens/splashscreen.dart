@@ -13,7 +13,7 @@ class Splashscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 5)).then((_) {
+    Future.delayed(Duration(seconds: 3)).then((_) {
       if (_auth.currentUser == null) {
         Get.off(() => Login());
       } else {

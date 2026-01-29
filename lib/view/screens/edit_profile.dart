@@ -168,7 +168,7 @@ class EditProfile extends StatelessWidget {
                         controller: ac.kitchenAddressController,
                         maxLines: 3,
                         decoration: InputDecoration(
-                          hintText: "ABC,It Bhawan, Agartala.......",
+                          hintText: "Agartala Tripura",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
