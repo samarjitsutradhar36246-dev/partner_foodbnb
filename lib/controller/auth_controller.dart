@@ -15,6 +15,9 @@ class AuthController extends GetxController {
   final passwordController = TextEditingController();
 
   // for register page
+
+  String? selectedPreference;
+
   final nameController = TextEditingController();
   final restaurantNamecontroller = TextEditingController();
   final regEmailController = TextEditingController();
@@ -24,11 +27,12 @@ class AuthController extends GetxController {
   final regRestaurantDesController = TextEditingController();
   final regPhoneController = TextEditingController();
   final regFoodpreferenceController = TextEditingController();
-  String? selectedPreference;
+
   final regCuisineController = TextEditingController();
   final regSpecialityController = TextEditingController(); // Temporary input
   final RxList<String> specialitiesList =
       <String>[].obs; // Store multiple specialities
+
   final regPanNumberController = TextEditingController();
   final regFssaiNumberController = TextEditingController();
   //for forget page
@@ -36,18 +40,24 @@ class AuthController extends GetxController {
 
   //for edit_profile
 
-  final TextEditingController fullNameController = TextEditingController();
-  final TextEditingController kitchenNameController = TextEditingController();
-  final TextEditingController aboutCooking = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController kitchenAddressController =
+  final TextEditingController editFullNameController = TextEditingController();
+  final TextEditingController editKitchenNameController =
       TextEditingController();
+  final TextEditingController editAboutCooking = TextEditingController();
+  final TextEditingController editPhoneNumberController =
+      TextEditingController();
+  final TextEditingController editKitchenAddressController =
+      TextEditingController();
+  final TextEditingController editCuisineController = TextEditingController();
+  final TextEditingController editSpecialityController =
+      TextEditingController();
+  final RxList<dynamic> editSpecialitiesList = <dynamic>[].obs;
 
   RxBool isLoading = false.obs;
   RxBool isAvailable = true.obs;
   RxBool isAcceptingOrders = true.obs;
   RxString profilePhotoUrl = ''.obs;
-  
+
   // Password visibility toggle for create password field
   RxBool isPasswordVisible = false.obs;
 
@@ -74,12 +84,15 @@ class AuthController extends GetxController {
 
       userData.value = snapshot.data() as Map; //snapshot of each doc as map
 
-      fullNameController.text = userData['ownerName'] ?? '';
-      kitchenNameController.text = userData['name'] ?? '';
-      aboutCooking.text = userData['description'] ?? '';
-      phoneNumberController.text = userData['phone'] ?? '';
-      kitchenAddressController.text = userData['locationName'] ?? '';
+      editFullNameController.text = userData['ownerName'] ?? '';
+      editKitchenNameController.text = userData['name'] ?? '';
+      editAboutCooking.text = userData['description'] ?? '';
+      editPhoneNumberController.text = userData['phone'] ?? '';
+      editKitchenAddressController.text = userData['locationName'] ?? '';
       isActive.value = userData['isActive'] ?? false;
+      editCuisineController.text = userData['cuisine'] ?? '';
+      editSpecialitiesList.value = userData['specialties'] ?? [];
+
       log("Got user data: $userData");
     } catch (e) {
       log(e.toString());
@@ -142,7 +155,7 @@ class AuthController extends GetxController {
               "uid": FirebaseAuth.instance.currentUser?.uid,
               "createdAt":
                   DateTime.now(), //or we can also give time by using Timestamp.now()
-              "cuisine": "",
+              "cuisine": regCuisineController.text.trim(),
               "deliveryTime": "",
               "description": regRestaurantDesController.text.trim(),
               "featuredDishImage": "",
@@ -177,7 +190,7 @@ class AuthController extends GetxController {
               "uid": FirebaseAuth.instance.currentUser?.uid,
               "createdAt":
                   DateTime.now(), //or we can also give time by using Timestamp.now()
-              "cuisine": "",
+              "cuisine": regCuisineController.text.trim(),
               "deliveryTime": "",
               "description": regRestaurantDesController.text.trim(),
               "featuredDishImage": "",
@@ -281,11 +294,13 @@ class AuthController extends GetxController {
           .collection('moms_kitchens')
           .doc(FirebaseAuth.instance.currentUser?.uid)
           .update({
-            "phone": phoneNumberController.text,
-            "description": aboutCooking.text.trim(),
-            "locationName": kitchenAddressController.text.trim(),
-            "name": kitchenNameController.text.trim(),
-            "ownerName": fullNameController.text.trim(),
+            "phone": editPhoneNumberController.text,
+            "description": editAboutCooking.text.trim(),
+            "locationName": editKitchenAddressController.text.trim(),
+            "name": editKitchenNameController.text.trim(),
+            "ownerName": editFullNameController.text.trim(),
+            "cuisine": editCuisineController.text.trim(),
+            "specialties": editSpecialitiesList.value,
           });
 
       log("updateProfile edit");
