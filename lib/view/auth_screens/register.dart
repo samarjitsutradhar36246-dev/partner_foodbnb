@@ -66,28 +66,28 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 36),
 
               _label("Full Name"),
-              _textField(
+              textField(
                 hint: "Enter your full name",
                 icon: Icons.person_outline,
                 controller: ac.nameController,
               ),
               const SizedBox(height: 20),
               _label("Restaurant Name"),
-              _textField(
+              textField(
                 hint: "Enter restaurant's full name",
                 icon: Icons.restaurant_rounded,
                 controller: ac.restaurantNamecontroller,
               ),
               const SizedBox(height: 20),
               _label("Restaurant Description"),
-              _textField(
+              textField(
                 hint: "Enter Restaurant Description",
                 icon: Icons.house_outlined,
                 controller: ac.regRestaurantDesController,
               ),
               const SizedBox(height: 20),
               _label("Restaurant Address"),
-              _textField(
+              textField(
                 hint: "Enter full Address of Restaurant",
                 icon: Icons.maps_home_work_sharp,
                 controller: ac.regRestaurantAddress,
@@ -120,7 +120,7 @@ class RegisterScreen extends StatelessWidget {
               //opentime and close time
               const SizedBox(height: 20),
               _label("Set Cuisine"),
-              _textField(
+              textField(
                 hint: "Enter Your Cuisine",
                 icon: Icons.room_service,
                 controller: ac.regCuisineController,
@@ -137,7 +137,7 @@ class RegisterScreen extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: _textField(
+                        child: textField(
                           hint: "Add a speciality",
                           icon: Icons.folder_special,
                           controller: ac.regSpecialityController,
@@ -196,7 +196,7 @@ class RegisterScreen extends StatelessWidget {
               //pan card number
               const SizedBox(height: 20),
               _label("Pan Number"),
-              _textField(
+              textField(
                 hint: "Pan Number",
                 icon: Icons.credit_card,
                 controller: ac.regPanNumberController,
@@ -205,14 +205,14 @@ class RegisterScreen extends StatelessWidget {
               //fssai number
               // const SizedBox(height: 20),
               // _label("fssai Number"),
-              // _textField(
+              // textField(
               //   hint: "Fssai Number",
               //   icon: Icons.credit_card,
               //   controller: ac.regFssaiNumberController,
               // ),
               const SizedBox(height: 20),
               _label("Email"),
-              _textField(
+              textField(
                 hint: "Enter email",
                 icon: Icons.email_outlined,
                 controller: ac.regEmailController,
@@ -220,7 +220,7 @@ class RegisterScreen extends StatelessWidget {
 
               const SizedBox(height: 20),
               _label("Enter Phone"),
-              _textField(
+              textField(
                 hint: "Enter your Phone Number",
                 icon: Icons.phone,
                 controller: ac.regPhoneController,
@@ -234,7 +234,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 30),
               _label("Create Password"),
               Obx(
-                () => _textField(
+                () => textField(
                   hint: "Create password",
                   icon: Icons.lock_outline,
                   isPassword: true,
@@ -248,7 +248,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 20),
 
               _label("Confirm Password"),
-              _textField(
+              textField(
                 hint: "Re-enter password",
                 icon: Icons.lock_outline,
                 isPassword: true,
@@ -318,43 +318,41 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _textField({
-    required String hint,
-    required IconData icon,
-    required TextEditingController controller,
-    bool isPassword = false,
-    VoidCallback? onToggleVisibility,
-    bool? isVisible,
-    TextInputType? keyboardType,
-    List<TextInputFormatter>? inputFormatters,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: isPassword && !(isVisible ?? false),
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      decoration: InputDecoration(
-        hintText: hint,
-        prefixIcon: Icon(icon, color: Colors.grey),
-        suffixIcon: (isPassword && onToggleVisibility != null)
-            ? IconButton(
-                icon: Icon(
-                  (isVisible ?? false)
-                      ? Icons.visibility
-                      : Icons.visibility_off,
-                  color: Colors.grey,
-                ),
-                onPressed: onToggleVisibility,
-              )
-            : null,
-        filled: true,
-        fillColor: Colors.grey.shade100,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide.none,
-        ),
+Widget textField({
+  required String hint,
+  required IconData icon,
+  required TextEditingController controller,
+  bool isPassword = false,
+  VoidCallback? onToggleVisibility,
+  bool? isVisible,
+  TextInputType? keyboardType,
+  List<TextInputFormatter>? inputFormatters,
+}) {
+  return TextField(
+    controller: controller,
+    obscureText: isPassword && !(isVisible ?? false),
+    keyboardType: keyboardType,
+    inputFormatters: inputFormatters,
+    decoration: InputDecoration(
+      hintText: hint,
+      prefixIcon: Icon(icon, color: Colors.grey),
+      suffixIcon: (isPassword && onToggleVisibility != null)
+          ? IconButton(
+              icon: Icon(
+                (isVisible ?? false) ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              onPressed: onToggleVisibility,
+            )
+          : null,
+      filled: true,
+      fillColor: Colors.grey.shade100,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide.none,
       ),
-    );
-  }
+    ),
+  );
 }

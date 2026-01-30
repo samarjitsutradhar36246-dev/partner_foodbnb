@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:partner_foodbnb/controller/auth_controller.dart';
+import 'package:partner_foodbnb/view/auth_screens/register.dart';
 
 class EditProfile extends StatelessWidget {
   EditProfile({super.key});
 
   final AuthController ac = Get.put(AuthController());
+  final Color primaryRed = Colors.red.shade400;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +95,7 @@ class EditProfile extends StatelessWidget {
                       Text('Full Name'),
                       SizedBox(height: 6),
                       TextField(
-                        controller: ac.fullNameController,
+                        controller: ac.editFullNameController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -104,7 +106,7 @@ class EditProfile extends StatelessWidget {
                       Text('Kitchen Name (Display Name)'),
                       SizedBox(height: 6),
                       TextField(
-                        controller: ac.kitchenNameController,
+                        controller: ac.editKitchenNameController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -115,11 +117,118 @@ class EditProfile extends StatelessWidget {
                       Text('About Your Cooking'),
                       SizedBox(height: 6),
                       TextField(
-                        controller: ac.aboutCooking,
+                        controller: ac.editAboutCooking,
                         maxLines: 4, //max we can add 4 lines here
                         decoration: InputDecoration(
                           hintText:
                               "Tell customers a little bit about what makes your food special.......",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+
+                      //cuisine
+                      SizedBox(height: 5),
+                      Text("Set Cuisine"),
+                      SizedBox(height: 6),
+                      TextField(
+                        controller: ac.editCuisineController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      //specialities
+                      SizedBox(height: 5),
+                      Text("Specialities"),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Input field for adding specialities
+                          Row(
+                            children: [
+                              Expanded(
+                                child: textField(
+                                  hint: "Add a speciality",
+                                  icon: Icons.folder_special,
+                                  controller: ac.editSpecialityController,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              IconButton(
+                                onPressed: () {
+                                  if (ac.editSpecialityController.text
+                                      .trim()
+                                      .isNotEmpty) {
+                                    ac.editSpecialitiesList.add(
+                                      ac.editSpecialityController.text.trim(),
+                                    );
+                                    ac.editSpecialityController.clear();
+                                  }
+                                },
+                                icon: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: primaryRed,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          // Display added specialities as chips
+                          Obx(
+                            () => ac.editSpecialitiesList.isEmpty
+                                ? const Text(
+                                    "No specialities added yet",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 12,
+                                    ),
+                                  )
+                                : Wrap(
+                                    spacing: 8,
+                                    runSpacing: 8,
+                                    children: ac.editSpecialitiesList.map((
+                                      speciality,
+                                    ) {
+                                      return Chip(
+                                        label: Text(speciality),
+                                        deleteIcon: const Icon(
+                                          Icons.close,
+                                          size: 18,
+                                        ),
+                                        onDeleted: () {
+                                          ac.editSpecialitiesList.remove(
+                                            speciality,
+                                          );
+                                        },
+                                        backgroundColor: primaryRed,
+                                        labelStyle: TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+
+                      //pan card
+                      SizedBox(height: 6),
+                      Text("Pan Number"),
+                      SizedBox(height: 6),
+                      TextField(
+                        controller: ac.editCuisineController,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -153,7 +262,7 @@ class EditProfile extends StatelessWidget {
                       Text('Phone Number'),
                       SizedBox(height: 6),
                       TextField(
-                        controller: ac.phoneNumberController,
+                        controller: ac.editPhoneNumberController,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.phone_android_outlined),
                           border: OutlineInputBorder(
@@ -165,7 +274,7 @@ class EditProfile extends StatelessWidget {
                       Text('Kitchen Address'),
                       SizedBox(height: 6),
                       TextField(
-                        controller: ac.kitchenAddressController,
+                        controller: ac.editKitchenAddressController,
                         maxLines: 3,
                         decoration: InputDecoration(
                           hintText: "Agartala Tripura",

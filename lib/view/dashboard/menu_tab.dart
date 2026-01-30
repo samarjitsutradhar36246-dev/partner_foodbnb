@@ -78,28 +78,54 @@ class MenuScreen extends StatelessWidget {
               _buildCategoryFilters(primaryRed, surfaceLight),
 
               Expanded(
-                child: FirestoreListView(
-                  query: FirebaseFirestore.instance
-                      .collection('Dish')
-                      .where(
-                        'restaurant_id',
-                        isEqualTo: FirebaseAuth
-                            .instance
-                            .currentUser
-                            ?.uid, //ai line ta na dile shob dishes from all shops will come, eta dewa te only current user er dish e show korbe.
-                      ), //restuarant filteraltion
-                  emptyBuilder: (context) => Text('No new Dishes'),
-                  itemBuilder: (context, doc) {
-                    final dishData = doc
-                        .data(); //dishData ,local variable e oi particular list ta present thakbe
-                    return _buildMenuItem(
-                      dishData,
-                      surfaceLight,
-                      primaryRed,
-                      textSecondary,
-                    );
-                  },
-                ),
+                child: Obx(() {
+                  String selectedCategory =
+                      categories[selectedCategoryIndex.value];
+
+                  return FirestoreListView<Map<String, dynamic>>(
+                    query: FirebaseFirestore.instance
+                        .collection('Dish')
+                        .where(
+                          'restaurant_id',
+                          isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+                        ),
+                    emptyBuilder: (context) =>
+                        Center(child: Text('No dishes found')),
+                    itemBuilder: (context, doc) {
+                      final dishData = doc.data();
+
+                      // Filter at UI level based on selected category
+                      bool shouldShow = false;
+
+                      if (selectedCategory == "All") {
+                        shouldShow = true;
+                      } else if (selectedCategory == "Active") {
+                        shouldShow = (dishData['qnt_available'] ?? 0) > 0;
+                      } else if (selectedCategory == "Sold Out") {
+                        shouldShow = (dishData['qnt_available'] ?? 0) == 0;
+                      } else if (selectedCategory == "Starters") {
+                        shouldShow = dishData['category'] == 'Starters';
+                      } else if (selectedCategory == "Mains") {
+                        shouldShow = dishData['category'] == 'Mains';
+                      } else if (selectedCategory == "Desserts") {
+                        shouldShow = dishData['category'] == 'Desserts';
+                      }
+
+                      // If item doesn't match filter, don't show it
+                      if (!shouldShow) {
+                        return const SizedBox.shrink();
+                      }
+
+                      // Show the item if it matches the filter
+                      return _buildMenuItem(
+                        dishData,
+                        surfaceLight,
+                        primaryRed,
+                        textSecondary,
+                      );
+                    },
+                  );
+                }),
               ),
             ],
           ),
@@ -153,8 +179,9 @@ class MenuScreen extends StatelessWidget {
           bool isSelected = selectedCategoryIndex.value == index;
 
           return GestureDetector(
-            onTap: () => (() =>
-                selectedCategoryIndex.value = index), //dmc why not needed here
+            onTap: () {
+              selectedCategoryIndex.value = index;
+            },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 6),
               padding: const EdgeInsets.symmetric(horizontal: 20),
