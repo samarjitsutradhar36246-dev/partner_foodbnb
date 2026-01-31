@@ -218,6 +218,7 @@ class EarningsScreen extends StatelessWidget {
 
             FirestoreListView(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               query: FirebaseFirestore.instance
                   .collection('transactions')
                   .orderBy('time', descending: true),

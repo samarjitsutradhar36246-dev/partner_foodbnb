@@ -94,7 +94,6 @@ class MenuScreen extends StatelessWidget {
                     itemBuilder: (context, doc) {
                       final dishData = doc.data();
 
-                     
                       bool shouldShow = false;
 
                       if (selectedCategory == "All") {

@@ -5,10 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:partner_foodbnb/controller/order_controller.dart';
 
+import 'package:partner_foodbnb/controller/auth_controller.dart';
+import 'package:partner_foodbnb/controller/order_dashboard_controller.dart';
+
 class OrderScreen extends StatelessWidget {
   OrderScreen({super.key});
 
   final OrderController oc = Get.put(OrderController()); //for orders
+  final DashboardController dc = Get.put(DashboardController());
+  final AuthController ac = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +104,37 @@ class OrderScreen extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _statBox(Icons.restaurant, "5", "Active"),
-        _statBox(Icons.receipt_long, "3", "New"),
-        _statBox(Icons.remove_circle, "2", "Sold Out"),
-        _statBox(Icons.currency_rupee, "2300", "Revenue"),
+        Obx(
+          () => _statBox(
+            Icons.restaurant,
+            dc.activeDishes.value.toString(),
+            "Active",
+          ),
+        ),
+
+        Obx(
+          () => _statBox(
+            Icons.receipt_long,
+            dc.totalOrders.value.toString(),
+            "New",
+          ),
+        ),
+
+        Obx(
+          () => _statBox(
+            Icons.remove_circle,
+            dc.soldOutDishes.value.toString(),
+            "Sold Out",
+          ),
+        ),
+
+        Obx(
+          () => _statBox(
+            Icons.currency_rupee,
+            ac.userData.value['walletBalance'].toString(),
+            "Revenue",
+          ),
+        ),
       ],
     );
   }
